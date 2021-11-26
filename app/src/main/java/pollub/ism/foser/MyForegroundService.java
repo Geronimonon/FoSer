@@ -89,7 +89,8 @@ public class MyForegroundService extends Service {
 
         createNotificationChannel();
 
-
+        Intent notificationIntent = new Intent(this,MainActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,0,notificationIntent,0);
 
 
         Notification notification = new Notification.Builder(this,CHANNEL_ID)
@@ -108,9 +109,11 @@ public class MyForegroundService extends Service {
         return START_NOT_STICKY;
     }
     private void doWork() {
-        if(do_work) {
-            timer.schedule(timerTask, 0L, double_speed ? period / 2L : period);
-        }
+        String info = "Start working..."
+                +"\n show_time=" + show_time.toString()
+                +"\n do_work=" + do_work.toString()
+                +"\n double_speed=" + double_speed.toString();
+        Toast.makeText(this, info ,Toast.LENGTH_LONG).show();
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void createNotificationChannel() {
